@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 	FILE *outFile;
 
 	char* inFileName = NULL;
-	char* outFileName = NULL;
+	char* outFileName;
 
 	//getopt(3) for command line args
 	int opt; 
@@ -39,29 +39,40 @@ int main(int argc, char **argv)
 				printf("Invalid argument. Please type ./chain -h");
 		}
 	}
-	
+	printf("%s ", inFileName);
+	printf("%s ", outFileName);
+	int result;
+	result = strcmp(inFileName, "input.dat");
+	printf("strcmp");
+	printf("%d ", result);
+
 	//if no filenames are specified for input and output, defaults are .dat files
 	if (outFileName == NULL && inFileName == NULL)
 	{
+		printf("1");
 		inFileName = "input.dat";
 		outFileName = "output.dat";
 	}
 	
 	//input filename is still going to null condition
-	else if (outFileName == NULL && inFileName != "input.dat")
+	else if (outFileName == NULL && result == 1)
 	{
+		printf("2");
 		outFileName = inFileName;
-        	strcat(outFileName,".out");
+		char str[] = ".out";
+        	strcat(outFileName, str);
 	}
 
 	//if no output filename is entered, output.dat by default
 	else if (outFileName == NULL)
 	{
+		printf("3");
 		outFileName = "output.dat";
 	}
 
-	printf("look");
+	printf("INP\n");
 	printf("%s ",inFileName);
+	printf("OUT\n");
 	printf("%s ",outFileName);
 	inFile = fopen(inFileName, "r");
 
