@@ -5,17 +5,20 @@
 
 int main(int argc, char **argv)
 {
+	//creating files and filename variables for read/write
 	FILE *inFile;
 	FILE *outFile;
 
 	char* inFileName = NULL;
 	char* outFileName = NULL;
 
+	//getopt(3) for command line args
 	int opt; 
 	while ((opt = getopt(argc, argv, "hi:o:")) != -1)
 	{
 		switch(opt)
 		{
+			//help message
 			case 'h':
 				printf("\n-------Command Line Help-------\n\n");
         		        printf("./chain -h                    Helps with command line arguments.\n");
@@ -23,17 +26,21 @@ int main(int argc, char **argv)
            			printf("./chain -o [OUTPUTFILENAME]   If user specifies filename, the output will be printed to that file.\n\n");
 				exit(0);
 				break;
+			// -i [inputfilename] 
 			case 'i':
 				inFileName = optarg;
 				break;
+			// -o [outputfilename]
 			case 'o':
 				outFileName = optarg;
 				break;
+			//outlier error case prompting with help message
 			default:
 				printf("Invalid argument. Please type ./chain -h");
 		}
 	}
 	
+	//if no filenames are specified for input and output, defaults are .dat files
 	if (outFileName == NULL && inFileName == NULL)
 	{
 		inFileName = "input.dat";
@@ -47,21 +54,28 @@ int main(int argc, char **argv)
         	strcat(outFileName,".out");
 	}
 
+	//if no output filename is entered, output.dat by default
 	else if (outFileName == NULL)
 	{
 		outFileName = "output.dat";
 	}
 
+	printf("look");
+	printf("%s ",inFileName);
+	printf("%s ",outFileName);
 	inFile = fopen(inFileName, "r");
 
+	//using perror to print error msg for no inputfilename
 	if (inFile == NULL)
 	{
 		perror ("INPUTFILENAME does not exist.");
 		return -1;
 	}
 
+	//opening outputfile to write
 	outFile = fopen(outFileName, "w");
 
+	//getpid() system call
 	pid_t parentProcessID = getpid();
 	int numOfChildren;
 	fscanf(inFile, "%d", &numOfChildren);
@@ -72,6 +86,7 @@ int main(int argc, char **argv)
 	int i;
 	for (i = 0; i < numOfChildren; i++)
 	{
+		//passing pid_t and pid to fork(2)
 		pid_t pid = fork();
 		if (pid == 0)
 		{
