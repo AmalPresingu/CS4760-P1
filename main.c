@@ -34,52 +34,28 @@ int main(int argc, char **argv)
 			case 'o':
 				outFileName = optarg;
 				break;
-			//outlier error case prompting with help message
-			default:
-				printf("Invalid argument. Please type ./chain -h");
 		}
 	}
-	printf("%s ", inFileName);
-	printf("%s ", outFileName);
-	int result;
-	result = strcmp(inFileName, "input.dat");
-	printf("strcmp");
-	printf("%d ", result);
 
 	//if no filenames are specified for input and output, defaults are .dat files
 	if (outFileName == NULL && inFileName == NULL)
 	{
-		printf("1");
 		inFileName = "input.dat";
 		outFileName = "output.dat";
 	}
 	
-	//input filename is still going to null condition
-	else if (outFileName == NULL && result == 1)
-	{
-		printf("2");
-		outFileName = inFileName;
-		char str[] = ".out";
-        	strcat(outFileName, str);
-	}
-
 	//if no output filename is entered, output.dat by default
 	else if (outFileName == NULL)
 	{
-		printf("3");
 		outFileName = "output.dat";
 	}
-
-	printf("INP\n");
-	printf("%s ",inFileName);
-	printf("OUT\n");
-	printf("%s ",outFileName);
+	
 	inFile = fopen(inFileName, "r");
 
 	//using perror to print error msg for no inputfilename
 	if (inFile == NULL)
 	{
-		perror ("INPUTFILENAME does not exist.");
+		perror ("INPUTFILENAME does not exist.\n");
 		return -1;
 	}
 
@@ -108,12 +84,14 @@ int main(int argc, char **argv)
 			{
 				char* line = NULL;
 				size_t len = 0;
+				//using getline instead of fgets here (was having issues with c99 but seems to with with c11)
 				ssize_t read = getline(&line, &len, inFile);
 			}
 
 			fscanf(inFile, "%d", &size);
 			int arr[size];
 
+			//parsing inputfile and printing to outputfile
 			int r; 
 			for (r = 0; r < size; r++)
 			{

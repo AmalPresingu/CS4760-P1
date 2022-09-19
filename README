@@ -1,0 +1,29 @@
+Author  : Amal Presingu
+Date    : 9/18/2022
+CS4760  : Project 1
+
+HOW TO RUN
+----------
+1. Run the make command to create "chain" executable.
+2. There will presumably be an input file that the program can read from.
+3. Type ./chain -h to view possible commands.
+4. After running once, run clean command for best results.
+
+
+COMMANDS
+--------
+./chain                                             (will take input.dat as default and print to output.dat by default)
+./chain -h                                          (print help message)
+./chain -i [inputfilename]                          (Takes inputfilename and prints to output.dat)
+./chain -i [inputfilename] -o [outputfilename]      (Takes inputfilename and prints to outputfilename)
+
+
+Version Control
+---------------
+The .git subdirectory can be found by running ls -la in the directory.
+GitHub Repo: https://github.com/AmalPresingu/CS4760-P1
+
+ISSUES
+------
+When running ./chain -i [randominputfilename] the output file will always be output.dat instead of [randominputfilename].out. 
+That should be the only issue, and everything else should be functional. 
